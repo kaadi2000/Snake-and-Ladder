@@ -1,5 +1,6 @@
 import numpy
 import random
+import threading
 
 level_list_snakes={'easy': 5, 'medium': 6, 'hard':7}
 level_list_ladder={'easy': 7, 'medium': 6, 'hard':5}
@@ -69,8 +70,10 @@ def new_game(level):
                 board[i][j]=(9-i)*10 + j + 1
     board_original = board
     board_original = board_original.astype('int32')
-    create_snake(level)
-    create_ladder(level)
+    x=threading.Thread(target = create_snake, args = (level,))
+    x.start()
+    y=threading.Thread(target = create_ladder, args = (level,))
+    y.start()
 
 def game_prerequisite():
     global player_list,object_list
